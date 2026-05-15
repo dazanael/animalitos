@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/login.css">
+
+    <title>Animalitos Manizales</title>
+</head>
+<body>
+    <section class="form_box" id="login_box">
+        <h1>Inicia sesión</h1>
+        <form action="">
+            <div class="input_box">
+                <label for="email_login">Correo:</label>
+                <input type="text" id="email_login" maxlength="100" required>
+            </div>
+            <div class="input_box">
+                <label for="pass_login">Contraseña:</label>
+                <input type="password" id="pass_login" maxlength="32" required>
+            </div>
+            <button class="btn_submit">Iniciar sesión</button>
+        </form>
+        <p id="btn_text">¿No tienes cuenta? Toca aquí para registrarte</p>
+    </section>
+
+    <section class="form_box invisible" id="sign_up_box">
+        <h1>Regístrate</h1>
+        <form action="" class="form_sign_up">
+            <div class="input_box">
+                <label for="name_sign_up">Nombre:</label>
+                <input type="text" id="name_sign_up" maxlength="45" required>
+            </div>
+            <div class="input_box">
+                <label for="email_sign_up">Correo:</label>
+                <input type="text" id="email_sign_up" maxlength="100" required>
+            </div>
+            <div class="input_box">
+                <label for="pass_sign_up">Contraseña:</label>
+                <input type="password" id="pass_sign_up" maxlength="32" required>
+            </div>
+            <button class="btn_submit">Regístrarse</button>
+        </form>
+    </section>
+    <script src="js/login.js"></script>
+</body>
+</html>
