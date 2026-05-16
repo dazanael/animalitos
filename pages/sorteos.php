@@ -1,3 +1,10 @@
+<?php
+include("../php/conexion.php");
+include("../php/crear_sorteo.php");
+
+$sql = "SELECT * FROM animales";
+$resultado = mysqli_query($conexion, $sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,9 +23,26 @@
     </header>
     <section id="info_box">
         <div id="animals_box">
+            <?php while($animal = mysqli_fetch_assoc($resultado)) { ?>
+                <div class="animal">
+                    <p><?php echo $animal["numero"] . " " . $animal["nombre"]; ?></p>
+                    <img src="" alt="">
+                    <p>0$</p>
+                </div>
+
+            <?php } ?>
 
         </div>
         <div id="last_winner_box">
+            <p>Último ganador</p>
+            <img src="" alt="" id="last_winner_img">
+            <p>Próximo sorteo en:</p>
+            <div id="time_box">
+                <p>Min:</p>
+                <p>45</p>
+                <p>Seg:</p>
+                <p>45</p>
+            </div>
 
         </div>
     </section>
@@ -26,12 +50,13 @@
         <form action="">
             <div class="input_box">
                 <label for="money_input">Ingresa tu apuesta:</label>
-                <input type="number" id="money_input" min="1" minlength="1">
+                <input type="number" id="money_input" min="1">
                 <p>$</p>
             </div>
             <button>Jugar</button>
         </form>
         
     </section>
+    <script src="../js/sorteos.js"></script>
 </body>
 </html>

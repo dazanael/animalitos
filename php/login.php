@@ -13,7 +13,7 @@ if(mysqli_num_rows($resultado)>0){
     $_SESSION["usuario"]=$usuario["nombre"];
     $_SESSION["rol_id"]=$usuario["rol_id"];
 
-    header("Location:../pages/sorteos.html");
+    header("Location:../pages/sorteos.php");
 }else{
     echo "El correo o la contraseña son incorrectos";
 }
