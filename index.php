@@ -18,7 +18,7 @@
         <form action="php/login.php" method="POST">
             <div class="input_box">
                 <label for="email_login">Correo:</label>
-                <input type="text" id="email_login" maxlength="100" name="email_login" required>
+                <input type="email" id="email_login" maxlength="100" name="email_login" required>
             </div>
             <div class="input_box">
                 <label for="pass_login" >Contraseña:</label>
@@ -38,7 +38,7 @@
             </div>
             <div class="input_box">
                 <label for="email_sign_up">Correo:</label>
-                <input type="text" id="email_sign_up" maxlength="100" name="email" required>
+                <input type="email" id="email_sign_up" maxlength="100" name="email" required>
             </div>
             <div class="input_box">
                 <label for="pass_sign_up">Contraseña:</label>
