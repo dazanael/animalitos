@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --fondos:#FFF8F0;
+    --fondos-secundarios:#FFFFFF;
+    --botones:#38D9A9;
+    --botones_hover:#118AB2;
+    --letras:#2D3748;
+    --letras-secundarias:#718096;
+
+    --amarillo:#FFD166;
+    --naranja:#F4A261;
+    --rosa:#FF6B6B;
+
+    --fuente-titulos:"Poppins",sans-serif;
+    --fuente-letras:"Nunito",sans-serif;
+}
+
+
+body{
+    background-color:var(--rosa);
+    width: 100vw;
+    height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+}
+
+
+
+h1{
+    font-family: var(--fuente-titulos);
+}
+p,label,input,a{
+    font-family: var(--fuente-letras);
+}
+
+.form_box{
+    background-color: var(--fondos);
+    width: 400px;
+    height: 450px;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items: center;
+}
+
+form{
+    width: 100%;
+    height: 60%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items: center;
+    gap: 10px;
+}
+
+.form_sign_up{
+    height: 70%;
+}
+
+.input_box{
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.input_box input{
+    width: 100%;
+    height: 30px;
+
+    border: 1px solid gray;
+    border-radius: 10px;
+    
+    padding-left: 10px;
+    padding-right: 10px;
+
+    align-self: center;
+}
+
+.btn_submit{
+    background-color: var(--botones);
+    width: 80%;
+    height: 40px;
+
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+
+    color: var(--letras);
+    font-size: 20px;
+}
+
+.btn_submit:hover{
+    background-color: var(--botones_hover);
+    cursor: pointer;
+    color: var(--fondos-secundarios);
+}
+
+#btn_text:hover{
+    cursor: pointer;
+    color: var(--botones_hover);
+}
+
+.invisible{
+    display: none;
+}
