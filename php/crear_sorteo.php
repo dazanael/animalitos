@@ -1,35 +1,88 @@
 <?php
+
 include("conexion.php");
 
 date_default_timezone_set("America/Bogota");
 
 $ahora = new DateTime();
-$ahora->modify('+1 hour');
-$ahora->setTime($ahora->format('H'), 0, 0);
 
-$hora_proxima = $ahora->format("Y-m-d H:00:00");
-$fecha = date("Y-m-d");
+$fecha_actual = $ahora->format("Y-m-d");
+$hora_actual = $ahora->format("H:i:s");
 
-$sql_validar_sorteo_activo = "SELECT * FROM sorteos WHERE esta_activo=1 LIMIT 1";
-$resultado_sorteo_activo= mysqli_query($conexion,$sql_validar_sorteo_activo)
+$sql_sorteo_activo = "
+SELECT *
+FROM sorteos
+WHERE esta_activo = 1
+LIMIT 1
+";
 
-if(mysqli_num_rows($resultado_sorteo_activo)>0){
-    $sorteo_activo=mysqli_fetch_assoc($resultado_sorteo_activo);
-    
-    if($sorteo_activo["fecha"]<$fecha || ($sorteo_activo["fecha"]==$fecha && $sorteo_activo["hora_revelacion"]<$ahora)){
-        
-        $id = $sorteo_activo["id"];
-        $sql_cerrar_sorteo = "UPDATE sorteos SET esta_activo = 0 WHERE id='$id'";
-        $resultado_updtae=mysqli_query($conexion,$sql_cerrar_sorteo);
-        
+$resultado = mysqli_query($conexion, $sql_sorteo_activo);
+
+if(mysqli_num_rows($resultado) > 0){
+
+    $sorteo = mysqli_fetch_assoc($resultado);
+
+    $fecha_sorteo = $sorteo["fecha"];
+    $hora_sorteo = $sorteo["hora_revelacion"];
+
+    $finalizado = false;
+
+    if(
+        $fecha_actual > $fecha_sorteo ||
+        (
+            $fecha_actual == $fecha_sorteo &&
+            $hora_actual >= $hora_sorteo
+        )
+    ){
+        $finalizado = true;
+    }
+
+    if($finalizado){
+
+        include("cerrar_sorteo.php");
+
     }else{
 
-        die;
+        die("Hay un sorteo activo");
 
     }
 
 }
 
-mysqli_query($conexion, "INSERT INTO sorteos (fecha, hora_revelacion, esta_activo)VALUES ('$fecha', '$hora_proxima', 1)");
+/*
+|--------------------------------------------------------------------------
+| Crear nuevo sorteo
+|--------------------------------------------------------------------------
+*/
+
+$proxima_hora = new DateTime();
+
+$proxima_hora->modify('+1 hour');
+
+$proxima_hora->setTime(
+    $proxima_hora->format('H'),
+    0,
+    0
+);
+
+$fecha_nueva = $proxima_hora->format("Y-m-d");
+$hora_nueva = $proxima_hora->format("H:i:s");
+
+$sql_insertar = "
+INSERT INTO sorteos (
+    fecha,
+    hora_revelacion,
+    esta_activo
+)
+VALUES (
+    '$fecha_nueva',
+    '$hora_nueva',
+    1
+)
+";
+
+mysqli_query($conexion, $sql_insertar);
+
+echo "Nuevo sorteo creado";
 
 ?>
