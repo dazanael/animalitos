@@ -11,6 +11,8 @@ const lastWinnerName = document.getElementById("last_winner_name");
 let animalSeleccionado = null;
 let recargando = false;
 
+const balanceButton = document.getElementById("balance_button");
+
 /*
 |--------------------------------------------------------------------------
 | Seleccionar animal
@@ -173,6 +175,8 @@ form.addEventListener("submit", e => {
 
             cargarTotales();
 
+            cargarSaldo();
+
         }else{
 
             alert(data.message);
@@ -183,3 +187,17 @@ form.addEventListener("submit", e => {
 
 });
 
+/* obtener saldo */
+
+function cargarSaldo() {
+
+    fetch("../php/obtener_saldo.php")
+        .then(res => res.json())
+        .then(data => {
+
+            balanceButton.textContent =
+                "$" + data.saldo;
+
+        });
+
+}
