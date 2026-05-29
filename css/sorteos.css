@@ -39,12 +39,6 @@ p,label,input,a,button{
     font-family: var(--fuente-letras);
 }
 
-header{
-    width: 100%;
-    height: 70px;
-    background-color: var(--amarillo);
-}
-
 #info_box{
     width: 100%;
     height: 80%;
@@ -89,7 +83,8 @@ header{
     width: 100%;
     max-width: 100%;
     height: 100%;
-    max-height: 40%;
+    max-height: 50%;
+
 }
 .animal:hover, .selected{
     outline: 1px solid black;
@@ -195,4 +190,103 @@ form{
     background-color: var(--botones_hover);
     color: var(--fondos-secundarios);
     cursor: pointer;
+}
+
+header{
+    width:100%;
+    height:80px;
+
+    background-color:var(--amarillo);
+
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 40px;
+
+    box-sizing:border-box;
+}
+
+#header_left{
+    width:20%;
+
+    display:flex;
+    align-items:center;
+}
+
+#header_center{
+    width:60%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:40px;
+}
+
+#header_right{
+    width:20%;
+
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+
+    gap:20px;
+}
+
+#logo{
+    width:120px;
+    height:auto;
+
+    object-fit:contain;
+}
+
+.nav_item{
+    text-decoration:none;
+
+    color:var(--letras);
+
+    font-family:var(--fuente-titulos);
+    font-weight:600;
+    font-size:22px;
+}
+
+.nav_item.active{
+    color:var(--rosa);
+}
+
+#balance_button{
+    border:none;
+
+    background-color:var(--fondos);
+
+    padding:10px 20px;
+
+    border-radius:10px;
+
+    font-size:18px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+#profile_icon{
+    width:50px;
+    height:50px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    background-color:white;
+
+    cursor:pointer;
+}
+
+#profile_icon img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
 }

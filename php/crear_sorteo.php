@@ -4,10 +4,38 @@ include("conexion.php");
 
 date_default_timezone_set("America/Bogota");
 
+/*
+|--------------------------------------------------------------------------
+| CONFIGURACIÓN
+|--------------------------------------------------------------------------
+|
+| Para pruebas:
+| '+1 minute'
+|
+| Producción:
+| '+1 hour'
+|
+*/
+
+$intervalo = '+1 minute';
+
+/*
+|--------------------------------------------------------------------------
+| Hora actual
+|--------------------------------------------------------------------------
+*/
+
 $ahora = new DateTime();
 
 $fecha_actual = $ahora->format("Y-m-d");
+
 $hora_actual = $ahora->format("H:i:s");
+
+/*
+|--------------------------------------------------------------------------
+| Buscar sorteo activo
+|--------------------------------------------------------------------------
+*/
 
 $sql_sorteo_activo = "
 SELECT *
@@ -16,14 +44,30 @@ WHERE esta_activo = 1
 LIMIT 1
 ";
 
-$resultado = mysqli_query($conexion, $sql_sorteo_activo);
+$resultado = mysqli_query(
+    $conexion,
+    $sql_sorteo_activo
+);
+
+/*
+|--------------------------------------------------------------------------
+| Si hay sorteo activo
+|--------------------------------------------------------------------------
+*/
 
 if(mysqli_num_rows($resultado) > 0){
 
     $sorteo = mysqli_fetch_assoc($resultado);
 
     $fecha_sorteo = $sorteo["fecha"];
+
     $hora_sorteo = $sorteo["hora_revelacion"];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Verificar si terminó
+    |--------------------------------------------------------------------------
+    */
 
     $finalizado = false;
 
@@ -34,8 +78,16 @@ if(mysqli_num_rows($resultado) > 0){
             $hora_actual >= $hora_sorteo
         )
     ){
+
         $finalizado = true;
+
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Si terminó -> cerrar
+    |--------------------------------------------------------------------------
+    */
 
     if($finalizado){
 
@@ -43,7 +95,7 @@ if(mysqli_num_rows($resultado) > 0){
 
     }else{
 
-        die("Hay un sorteo activo");
+        return;
 
     }
 
@@ -55,18 +107,56 @@ if(mysqli_num_rows($resultado) > 0){
 |--------------------------------------------------------------------------
 */
 
-$proxima_hora = new DateTime();
+$proximo_sorteo = new DateTime();
 
-$proxima_hora->modify('+1 hour');
+$proximo_sorteo->modify($intervalo);
 
-$proxima_hora->setTime(
-    $proxima_hora->format('H'),
-    0,
-    0
-);
+/*
+|--------------------------------------------------------------------------
+| Normalizar tiempo
+|--------------------------------------------------------------------------
+|
+| Si es por hora:
+| 15:00:00
+|
+| Si es por minuto:
+| 15:32:00
+|
+*/
 
-$fecha_nueva = $proxima_hora->format("Y-m-d");
-$hora_nueva = $proxima_hora->format("H:i:s");
+if($intervalo == '+1 hour'){
+
+    $proximo_sorteo->setTime(
+        $proximo_sorteo->format('H'),
+        0,
+        0
+    );
+
+}else{
+
+    $proximo_sorteo->setTime(
+        $proximo_sorteo->format('H'),
+        $proximo_sorteo->format('i'),
+        0
+    );
+
+}
+
+/*
+|--------------------------------------------------------------------------
+| Formatear fecha y hora
+|--------------------------------------------------------------------------
+*/
+
+$fecha_nueva = $proximo_sorteo->format("Y-m-d");
+
+$hora_nueva = $proximo_sorteo->format("H:i:s");
+
+/*
+|--------------------------------------------------------------------------
+| Insertar sorteo
+|--------------------------------------------------------------------------
+*/
 
 $sql_insertar = "
 INSERT INTO sorteos (
@@ -81,8 +171,25 @@ VALUES (
 )
 ";
 
-mysqli_query($conexion, $sql_insertar);
+$resultado_insertar = mysqli_query(
+    $conexion,
+    $sql_insertar
+);
 
-echo "Nuevo sorteo creado";
+/*
+|--------------------------------------------------------------------------
+| Respuesta
+|--------------------------------------------------------------------------
+*/
+
+if($resultado_insertar){
+
+    return;
+
+}else{
+
+    echo mysqli_error($conexion);
+
+}
 
 ?>

@@ -1,6 +1,27 @@
 <?php
-
 include(__DIR__ . "/../php/conexion.php");
+include("../php/crear_sorteo.php");
+
+session_start();
+
+$usuario = null;
+
+if(isset($_SESSION["usuario_id"])){
+
+    $usuario_id = $_SESSION["usuario_id"];
+
+    $sql_usuario = "
+    SELECT *
+    FROM usuarios
+    WHERE id = '$usuario_id'
+    LIMIT 1
+    ";
+
+    $resultado_usuario = mysqli_query($conexion, $sql_usuario);
+
+    $usuario = mysqli_fetch_assoc($resultado_usuario);
+
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +59,10 @@ LIMIT 1
 ";
 
 $resultado_sorteo = mysqli_query($conexion, $sql_sorteo);
-
 $sorteo_activo = mysqli_fetch_assoc($resultado_sorteo);
+if(!$sorteo_activo){
+    die("No hay sorteo activo");
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -58,8 +81,7 @@ ON apuestas.animal_id = animales.id
 
 AND apuestas.sorteo_id = {$sorteo_activo['id']}
 
-GROUP BY animales.id
-";
+GROUP BY animales.id";
 
 $resultado = mysqli_query($conexion, $sql);
 
@@ -87,16 +109,55 @@ $resultado = mysqli_query($conexion, $sql);
 
     <header>
 
+        <div id="header_left">
+
+            <img 
+                src="../img/logo.png"
+                alt=""
+                id="logo"
+            >
+
+        </div>
+
+        <div id="header_center">
+
+            <a href="sorteos.php" class="nav_item active">
+                Sorteos
+            </a>
+
+            <a href="resultados.php" class="nav_item">
+                Resultados
+            </a>
+
+            <a href="#" class="nav_item">
+                Próximamente
+            </a>
+
+        </div>
+
+        <div id="header_right">
+
+            <button id="balance_button">
+                $<?php echo number_format($usuario["saldo"]); ?>
+            </button>
+
+            <div id="profile_icon">
+
+                <img 
+                    src="../img/profile.png"
+                    alt=""
+                >
+
+            </div>
+
+        </div>
+
     </header>
 
     <section id="info_box">
-
         <div id="animals_box">
-
             <?php while($animal = mysqli_fetch_assoc($resultado)) { ?>
-
                 <div class="animal" data-id="<?php echo $animal["id"];?>">
-
                     <p>
                         <?php 
                             echo $animal["numero"] . " " . $animal["nombre"]; 
@@ -182,16 +243,10 @@ $resultado = mysqli_query($conexion, $sql);
     </section>
 
     <script>
-
-        const fechaSorteo = "<?php echo $sorteo_activo['fecha']; ?>";
-
-        const horaSorteo = "<?php echo $sorteo_activo['hora_revelacion']; ?>";
-
+        const timestampObjetivo = <?php echo strtotime($sorteo_activo['fecha'] . ' ' . $sorteo_activo['hora_revelacion']); ?> * 1000;
     </script>
 
-    <script src="../js/sorteos.js"></script>
-    <script src="../js/apostar.js"></script>
-
+    <script src="../js/sorteos.js?v=2"></script>
     <script src="../js/revisar_sorteo.js"></script>
 
 </body>

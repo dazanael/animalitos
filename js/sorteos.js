@@ -1,43 +1,51 @@
-let animal_seleccionado = null
-const animales = document.querySelectorAll(".animal")
+const animales = document.querySelectorAll(".animal");
 
-
-animales.forEach(animal =>{
-    animal.addEventListener("click", ()=>{
-        if(animal_seleccionado!=null){
-            animal_seleccionado.classList.remove("selected")
-        }
-        animal_seleccionado = animal
-        animal_seleccionado.classList.add("selected")
-    })
-})
+const moneyInput = document.getElementById("money_input");
 
 const timeBox = document.getElementById("time_box");
 
+const lastWinnerImg = document.getElementById("last_winner_img");
+
+const lastWinnerName = document.getElementById("last_winner_name");
+
+let animalSeleccionado = null;
+let recargando = false;
+
+/*
+|--------------------------------------------------------------------------
+| Seleccionar animal
+|--------------------------------------------------------------------------
+*/
+
+animales.forEach(animal => {
+
+    animal.addEventListener("click", () => {
+
+        animales.forEach(a => {
+            a.classList.remove("selected");
+        });
+
+        animal.classList.add("selected");
+
+        animalSeleccionado = animal.dataset.id;
+
+    });
+
+});
+
+/*
+|--------------------------------------------------------------------------
+| Contador
+|--------------------------------------------------------------------------
+*/
+
 function actualizarContador() {
 
-    const fechaObjetivo = new Date(
-        `${fechaSorteo}T${horaSorteo}`
-    );
-
     const ahora = new Date();
+    const diferencia = timestampObjetivo - ahora.getTime();
 
-    const diferencia = fechaObjetivo - ahora;
-
-    if(diferencia <= 0){
-
-        timeBox.innerHTML = `
-            <p>Min:</p>
-            <p>00</p>
-            <p>Seg:</p>
-            <p>00</p>
-        `;
-
-        return;
-    }
-
-    const minutos = Math.floor(diferencia / 1000 / 60);
-    const segundos = Math.floor((diferencia / 1000) % 60);
+    let minutos = Math.max(0, Math.floor(diferencia / 1000 / 60));
+    let segundos = Math.max(0, Math.floor((diferencia / 1000) % 60));
 
     timeBox.innerHTML = `
         <p>Min:</p>
@@ -46,14 +54,19 @@ function actualizarContador() {
         <p>${String(segundos).padStart(2, '0')}</p>
     `;
 
+    if (diferencia <= 0 && !recargando) {
+        recargando = true;
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    }
 }
 
-actualizarContador();
-
-setInterval(actualizarContador, 1000);
-
-const lastWinnerImg = document.getElementById("last_winner_img");
-const lastWinnerName = document.getElementById("last_winner_name");
+/*
+|--------------------------------------------------------------------------
+| Último ganador
+|--------------------------------------------------------------------------
+*/
 
 function cargarUltimoGanador() {
 
@@ -65,7 +78,8 @@ function cargarUltimoGanador() {
                 return;
             }
 
-            lastWinnerImg.src = "../" + data.url_imagen;
+            lastWinnerImg.src =
+                "../" + data.url_imagen;
 
             lastWinnerName.textContent =
                 data.numero + " " + data.nombre;
@@ -74,31 +88,11 @@ function cargarUltimoGanador() {
 
 }
 
-cargarUltimoGanador();
-
-setInterval(cargarUltimoGanador, 5000);
-
-const animals = document.querySelectorAll(".animal");
-
-const moneyInput = document.getElementById("money_input");
-
-let animalSeleccionado = null;
-
-animals.forEach(animal => {
-
-    animal.addEventListener("click", () => {
-
-        animals.forEach(a => {
-            a.classList.remove("selected");
-        });
-
-        animal.classList.add("selected");
-
-        animalSeleccionado = animal.dataset.id;
-
-    });
-
-});
+/*
+|--------------------------------------------------------------------------
+| Totales apuestas
+|--------------------------------------------------------------------------
+*/
 
 function cargarTotales() {
 
@@ -114,7 +108,8 @@ function cargarTotales() {
 
                 if(total){
 
-                    total.textContent = item.total + "$";
+                    total.textContent =
+                        item.total + "$";
 
                 }
 
@@ -124,6 +119,67 @@ function cargarTotales() {
 
 }
 
+/*
+|--------------------------------------------------------------------------
+| Inicializar inmediatamente
+|--------------------------------------------------------------------------
+*/
+
+actualizarContador();
+
+cargarUltimoGanador();
+
 cargarTotales();
 
+/*
+|--------------------------------------------------------------------------
+| Intervalos
+|--------------------------------------------------------------------------
+*/
+
+setInterval(actualizarContador, 1000);
+
+setInterval(cargarUltimoGanador, 5000);
+
 setInterval(cargarTotales, 5000);
+
+/* Apuestas */
+
+const form = document.getElementById("bet_form");
+
+form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    if(!animalSeleccionado){
+        alert("Selecciona un animal");
+        return;
+    }
+
+    const monto = moneyInput.value;
+
+    const formData = new FormData();
+
+    formData.append("animal_id", animalSeleccionado);
+    formData.append("monto", monto);
+
+    fetch("../php/apostar.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if(data.success){
+
+            cargarTotales();
+
+        }else{
+
+            alert(data.message);
+
+        }
+
+    });
+
+});
+
