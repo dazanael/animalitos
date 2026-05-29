@@ -1,0 +1,185 @@
+const animales = document.querySelectorAll(".animal");
+
+const moneyInput = document.getElementById("money_input");
+
+const timeBox = document.getElementById("time_box");
+
+const lastWinnerImg = document.getElementById("last_winner_img");
+
+const lastWinnerName = document.getElementById("last_winner_name");
+
+let animalSeleccionado = null;
+let recargando = false;
+
+/*
+|--------------------------------------------------------------------------
+| Seleccionar animal
+|--------------------------------------------------------------------------
+*/
+
+animales.forEach(animal => {
+
+    animal.addEventListener("click", () => {
+
+        animales.forEach(a => {
+            a.classList.remove("selected");
+        });
+
+        animal.classList.add("selected");
+
+        animalSeleccionado = animal.dataset.id;
+
+    });
+
+});
+
+/*
+|--------------------------------------------------------------------------
+| Contador
+|--------------------------------------------------------------------------
+*/
+
+function actualizarContador() {
+
+    const ahora = new Date();
+    const diferencia = timestampObjetivo - ahora.getTime();
+
+    let minutos = Math.max(0, Math.floor(diferencia / 1000 / 60));
+    let segundos = Math.max(0, Math.floor((diferencia / 1000) % 60));
+
+    timeBox.innerHTML = `
+        <p>Min:</p>
+        <p>${String(minutos).padStart(2, '0')}</p>
+        <p>Seg:</p>
+        <p>${String(segundos).padStart(2, '0')}</p>
+    `;
+
+    if (diferencia <= 0 && !recargando) {
+        recargando = true;
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Último ganador
+|--------------------------------------------------------------------------
+*/
+
+function cargarUltimoGanador() {
+
+    fetch("../php/obtener_ultimo_ganador.php")
+        .then(res => res.json())
+        .then(data => {
+
+            if(!data){
+                return;
+            }
+
+            lastWinnerImg.src =
+                "../" + data.url_imagen;
+
+            lastWinnerName.textContent =
+                data.numero + " " + data.nombre;
+
+        });
+
+}
+
+/*
+|--------------------------------------------------------------------------
+| Totales apuestas
+|--------------------------------------------------------------------------
+*/
+
+function cargarTotales() {
+
+    fetch("../php/obtener_totales.php")
+        .then(res => res.json())
+        .then(data => {
+
+            data.forEach(item => {
+
+                const total = document.querySelector(
+                    `.animal_total[data-id="${item.id}"]`
+                );
+
+                if(total){
+
+                    total.textContent =
+                        item.total + "$";
+
+                }
+
+            });
+
+        });
+
+}
+
+/*
+|--------------------------------------------------------------------------
+| Inicializar inmediatamente
+|--------------------------------------------------------------------------
+*/
+
+actualizarContador();
+
+cargarUltimoGanador();
+
+cargarTotales();
+
+/*
+|--------------------------------------------------------------------------
+| Intervalos
+|--------------------------------------------------------------------------
+*/
+
+setInterval(actualizarContador, 1000);
+
+setInterval(cargarUltimoGanador, 5000);
+
+setInterval(cargarTotales, 5000);
+
+/* Apuestas */
+
+const form = document.getElementById("bet_form");
+
+form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    if(!animalSeleccionado){
+        alert("Selecciona un animal");
+        return;
+    }
+
+    const monto = moneyInput.value;
+
+    const formData = new FormData();
+
+    formData.append("animal_id", animalSeleccionado);
+    formData.append("monto", monto);
+
+    fetch("../php/apostar.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if(data.success){
+
+            cargarTotales();
+
+        }else{
+
+            alert(data.message);
+
+        }
+
+    });
+
+});
+
