@@ -78,6 +78,8 @@ p,label,input,a,button{
     color: var(--letras);
     font-weight: bolder;
     font-size: 15px;
+    position:relative;
+    overflow:visible;
 }
 .animal img{
     width: 100%;
@@ -86,7 +88,8 @@ p,label,input,a,button{
     max-height: 50%;
 
 }
-.animal:hover, .selected{
+.animal:hover:not(:has(.cancel_bet:hover)),
+.selected{
     outline: 1px solid black;
     cursor: pointer;
     transform: scale(1.05);
@@ -291,3 +294,44 @@ header{
     object-fit:cover;
 }
 
+
+.cancel_bet{
+    position:absolute;
+
+    top:-12px;
+    right:-12px;
+
+    width:30px;
+    height:30px;
+
+    border-radius:50%;
+
+    background:#ff3b30;
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:24px;
+    font-weight:bold;
+    line-height:1;
+
+    cursor:pointer;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.35);
+
+    user-select:none;
+
+    position:absolute;
+    z-index:10000;
+}
+
+.cancel_bet:hover{
+    transform:scale(1.15);
+}
+
+.cancel_bet,
+.cancel_bet *{
+    pointer-events:auto;
+}

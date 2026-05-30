@@ -177,6 +177,30 @@ form.addEventListener("submit", e => {
 
             cargarSaldo();
 
+            const animal = document.querySelector(
+                `.animal[data-id="${animalSeleccionado}"]`
+            );
+
+            if(
+                animal &&
+                !animal.querySelector(".cancel_bet")
+            ){
+
+                const botonCancelar =
+                    document.createElement("div");
+
+                botonCancelar.className =
+                    "cancel_bet";
+
+                botonCancelar.dataset.animalId =
+                    animalSeleccionado;
+
+                botonCancelar.innerHTML = "×";
+
+                animal.prepend(botonCancelar);
+
+            }
+
         }else{
 
             alert(data.message);
@@ -201,3 +225,67 @@ function cargarSaldo() {
         });
 
 }
+
+document.addEventListener("click", e => {
+
+    const btn = e.target.closest(".cancel_bet");
+
+    if(!btn){
+        return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const animalId = btn.dataset.animalId;
+
+    if(
+        !confirm(
+            "¿Cancelar todas las apuestas activas de este animal?"
+        )
+    ){
+        return;
+    }
+
+    const formData = new FormData();
+
+    formData.append(
+        "animal_id",
+        animalId
+    );
+
+    fetch("../php/cancelar_apuesta.php",{
+        method:"POST",
+        body:formData
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if(data.success){
+
+            btn.remove();
+
+            cargarSaldo();
+
+            cargarTotales();
+
+            const total = document.querySelector(
+                `.animal_total[data-id="${animalId}"]`
+            );
+
+            if(total){
+
+                total.textContent = "0$";
+
+            }
+
+        }else{
+
+            alert(data.message);
+
+        }
+
+    });
+
+
+});
