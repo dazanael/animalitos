@@ -177,6 +177,10 @@ $resultado_retiros = mysqli_query(
                 Retirar dinero
             </a>
 
+            <a href="cuentas_retiro.php" class="action_button">
+                Cuentas de retiro
+            </a>
+
         </section>
 
         <section class="history_box">
