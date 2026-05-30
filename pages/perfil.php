@@ -78,7 +78,7 @@ $usuario = mysqli_fetch_assoc(
                 <span>Usuario</span>
 
                 <strong>
-                    <?php echo $usuario["nombre_usuario"]; ?>
+                    <?php echo $usuario["nombre"]; ?>
                 </strong>
 
             </div>
@@ -157,6 +157,49 @@ $usuario = mysqli_fetch_assoc(
             </div>
 
         </div>
+
+        <form action="../php/actualizar_perfil.php" method="POST" id="profile_form">
+
+            <h2>Editar perfil</h2>
+
+            <input
+                type="text"
+                name="nombre"
+                value="<?php echo $usuario["nombre"]; ?>"
+                required
+            >
+
+            <input
+                type="email"
+                name="correo"
+                value="<?php echo $usuario["correo"]; ?>"
+                required
+            >
+
+            <input
+                type="text"
+                name="numero_documento"
+                value="<?php echo $usuario["numero_documento"]; ?>"
+                placeholder="Número de documento"
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Nueva contraseña"
+            >
+
+            <input
+                type="password"
+                name="confirmar_password"
+                placeholder="Confirmar contraseña"
+            >
+
+            <button type="submit">
+                Guardar cambios
+            </button>
+
+        </form>
 
         <a
             href="../php/logout.php"

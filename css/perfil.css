@@ -14,6 +14,7 @@ body{
     background:#FFF8F0;
 
     font-family:sans-serif;
+    padding-bottom: 10px;
 }
 
 header{
@@ -70,4 +71,41 @@ header a{
     text-align:center;
 
     font-weight:bold;
+}
+
+#profile_form{
+    background:white;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:15px;
+}
+
+#profile_form input{
+    height:45px;
+
+    padding:10px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+}
+
+#profile_form button{
+    height:45px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#38D9A9;
+
+    font-weight:bold;
+
+    cursor:pointer;
 }

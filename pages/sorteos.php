@@ -168,14 +168,14 @@ $resultado = mysqli_query($conexion, $sql);
                 $<?php echo number_format($usuario["saldo"]); ?>
             </button>
 
-            <div id="profile_icon">
+            <a href="perfil.php" id="profile_icon">
 
-                <img 
+                <img
                     src="../img/profile.png"
                     alt=""
                 >
 
-            </div>
+            </a>
 
         </div>
 
