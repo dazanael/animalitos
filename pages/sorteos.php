@@ -125,8 +125,8 @@ $resultado = mysqli_query($conexion, $sql);
                 Sorteos
             </a>
 
-            <a href="resultados.php" class="nav_item">
-                Resultados
+            <a href="historial.php" class="nav_item">
+                Historial
             </a>
 
             <a href="#" class="nav_item">

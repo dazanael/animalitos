@@ -1,0 +1,491 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --fondos:#FFF8F0;
+    --fondos-secundarios:#FFFFFF;
+    --botones:#38D9A9;
+    --botones_hover:#118AB2;
+    --letras:#2D3748;
+    --letras-secundarias:#718096;
+
+    --amarillo:#FFD166;
+    --naranja:#F4A261;
+    --rosa:#FF6B6B;
+
+    --fuente-titulos:"Poppins",sans-serif;
+    --fuente-letras:"Nunito",sans-serif;
+}
+
+body{
+    background-color:var(--fondos);
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+
+    box-sizing:border-box;
+}
+
+h1,h2,h3{
+    font-family:var(--fuente-titulos);
+}
+
+p,
+label,
+input,
+a,
+button,
+td,
+th{
+    font-family:var(--fuente-letras);
+}
+
+/*
+|--------------------------------------------------------------------------
+| HEADER
+|--------------------------------------------------------------------------
+*/
+
+header{
+    width:100%;
+    height:80px;
+
+    background-color:var(--amarillo);
+
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 40px;
+
+    box-sizing:border-box;
+}
+
+#header_left{
+    width:20%;
+
+    display:flex;
+    align-items:center;
+}
+
+#header_center{
+    width:60%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:40px;
+}
+
+#header_right{
+    width:20%;
+
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+
+    gap:20px;
+}
+
+#logo{
+    width:120px;
+    height:auto;
+
+    object-fit:contain;
+}
+
+.nav_item{
+    text-decoration:none;
+
+    color:var(--letras);
+
+    font-family:var(--fuente-titulos);
+    font-weight:600;
+    font-size:22px;
+
+    line-height:1;
+}
+
+.nav_item.active{
+    color:var(--rosa);
+}
+
+#balance_button{
+    border:none;
+
+    background-color:var(--fondos);
+
+    padding:10px 20px;
+
+    border-radius:10px;
+
+    font-size:18px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+#profile_icon{
+    width:50px;
+    height:50px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    background-color:white;
+
+    cursor:pointer;
+}
+
+#profile_icon img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+/*
+|--------------------------------------------------------------------------
+| CONTENIDO
+|--------------------------------------------------------------------------
+*/
+
+#history_container{
+    width:100%;
+
+    flex:1;
+
+    padding:30px 40px;
+
+    box-sizing:border-box;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:20px;
+}
+/*
+|--------------------------------------------------------------------------
+| TABS
+|--------------------------------------------------------------------------
+*/
+
+#tabs{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+.tab_button{
+    border:none;
+
+    background-color:var(--fondos-secundarios);
+
+    color:var(--letras);
+
+    padding:14px 26px;
+
+    border-radius:14px;
+
+    font-size:16px;
+    font-weight:800;
+
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+
+    cursor:pointer;
+
+    transition:0.2s;
+}
+
+.tab_button:hover{
+    transform:translateY(-2px);
+
+    background-color:var(--botones_hover);
+
+    color:white;
+}
+
+.tab_button.active{
+    background-color:var(--botones);
+
+    color:white;
+}
+
+.tab_button:hover{
+    background-color:var(--botones_hover);
+    color:white;
+}
+
+/*
+|--------------------------------------------------------------------------
+| PANEL
+|--------------------------------------------------------------------------
+*/
+
+.history_panel{
+    width:100%;
+
+    flex:1;
+    min-height:0;
+
+    background-color:var(--amarillo);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-sizing:border-box;
+
+    display:grid;
+
+    grid-template-rows:
+        auto
+        minmax(0,1fr)
+        auto;
+
+    gap:20px;
+
+    overflow:hidden;
+}
+
+.history_title{
+    font-size:28px;
+
+    margin-bottom:20px;
+
+    color:var(--letras);
+}
+
+/*
+|--------------------------------------------------------------------------
+| TABLA
+|--------------------------------------------------------------------------
+*/
+
+.table_container{
+    width:100%;
+    min-height:0;
+
+    overflow:auto;
+
+    border-radius:14px;
+
+    background-color:var(--fondos-secundarios);
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    background-color:var(--fondos-secundarios);
+
+    border-radius:10px;
+
+    overflow:hidden;
+}
+
+thead{
+    background-color:var(--botones);
+}
+
+thead th{
+    color:white;
+
+    padding:15px;
+
+    text-align:left;
+
+    font-size:18px;
+}
+
+tbody tr:nth-child(even){
+    background-color:#f8f8f8;
+}
+
+tbody td{
+    padding:12px 15px;
+
+    color:var(--letras);
+
+    font-size:15px;
+}
+th,
+td{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+/*
+|--------------------------------------------------------------------------
+| ESTADOS
+|--------------------------------------------------------------------------
+*/
+
+.estado_ganado{
+    color:green;
+    font-weight:bold;
+}
+
+.estado_perdido{
+    color:red;
+    font-weight:bold;
+}
+
+.estado_pendiente{
+    color:orange;
+    font-weight:bold;
+}
+
+/*
+|--------------------------------------------------------------------------
+| PAGINACIÓN
+|--------------------------------------------------------------------------
+*/
+
+.pagination{
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:15px;
+
+    flex-shrink:0;
+}
+
+.pagination button{
+    border:none;
+
+    background-color:var(--botones);
+
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.pagination button:hover{
+    background-color:var(--botones_hover);
+}
+
+.pagination span{
+    font-size:18px;
+
+    font-weight:bold;
+
+    color:var(--letras);
+}
+
+/*
+|--------------------------------------------------------------------------
+| RESPONSIVE
+|--------------------------------------------------------------------------
+*/
+
+@media(max-width:900px){
+
+    header{
+        padding:20px;
+
+        height:auto;
+
+        flex-direction:column;
+
+        gap:20px;
+    }
+
+    #header_left,
+    #header_center,
+    #header_right{
+        width:100%;
+
+        justify-content:center;
+    }
+
+    #history_container{
+        padding:20px;
+    }
+
+    #tabs{
+        flex-direction:column;
+    }
+
+    .tab_button{
+        width:100%;
+    }
+
+}
+
+.history_title{
+    font-size:30px;
+    font-weight:800;
+
+    margin-bottom:20px;
+
+    color:var(--letras);
+
+    flex-shrink:0;
+}
+
+.history_panel{
+    display:none;
+}
+
+.history_panel.active{
+    display:grid;
+}
+
+/*
+|--------------------------------------------------------------------------
+| TAB CONTENT
+|--------------------------------------------------------------------------
+*/
+
+.tab_content{
+    display:none;
+
+    flex:1;
+
+    overflow:hidden;
+}
+
+.tab_content.active{
+    display:flex;
+
+    flex-direction:column;
+}
+
+
+
+.table_wrapper{
+    flex:1;
+
+    overflow:auto;
+
+    min-height:0;
+}
