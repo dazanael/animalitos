@@ -164,9 +164,9 @@ $resultado = mysqli_query($conexion, $sql);
 
         <div id="header_right">
 
-            <button id="balance_button">
+            <a href="saldo.php" id="balance_button">
                 $<?php echo number_format($usuario["saldo"]); ?>
-            </button>
+            </a>
 
             <a href="perfil.php" id="profile_icon">
 

@@ -1,0 +1,222 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --fondos:#FFF8F0;
+    --fondos-secundarios:#FFFFFF;
+    --botones:#38D9A9;
+    --botones_hover:#118AB2;
+    --letras:#2D3748;
+    --letras-secundarias:#718096;
+
+    --amarillo:#FFD166;
+    --naranja:#F4A261;
+    --rosa:#FF6B6B;
+
+    --fuente-titulos:"Poppins",sans-serif;
+    --fuente-letras:"Nunito",sans-serif;
+}
+
+body{
+    background:var(--fondos);
+    min-height:100vh;
+    color:var(--letras);
+}
+
+h1,h2{
+    font-family:var(--fuente-titulos);
+}
+
+p,a,button,td,th{
+    font-family:var(--fuente-letras);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Header
+|--------------------------------------------------------------------------
+*/
+
+header{
+    width:100%;
+    height:80px;
+
+    background:var(--amarillo);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 40px;
+}
+
+header a{
+    text-decoration:none;
+    color:var(--letras);
+    font-weight:bold;
+    font-size:18px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Contenedor principal
+|--------------------------------------------------------------------------
+*/
+
+#saldo_container{
+    width:90%;
+    max-width:1200px;
+
+    margin:40px auto;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:30px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Tarjetas saldo
+|--------------------------------------------------------------------------
+*/
+
+.saldo_card{
+    background:var(--fondos-secundarios);
+
+    border-radius:15px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.saldo_card h2{
+    margin-bottom:15px;
+}
+
+.saldo_valor{
+    font-size:40px;
+    font-weight:bold;
+    color:var(--botones_hover);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acciones
+|--------------------------------------------------------------------------
+*/
+
+#acciones{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.action_button{
+    text-decoration:none;
+
+    background:var(--botones);
+
+    color:var(--letras);
+
+    padding:15px 30px;
+
+    border-radius:10px;
+
+    font-size:18px;
+    font-weight:bold;
+
+    transition:.2s;
+}
+
+.action_button:hover{
+    background:var(--botones_hover);
+    color:white;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Historiales
+|--------------------------------------------------------------------------
+*/
+
+.history_box{
+    background:white;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.history_box h2{
+    margin-bottom:20px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Tablas
+|--------------------------------------------------------------------------
+*/
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:var(--amarillo);
+}
+
+th{
+    padding:15px;
+    text-align:left;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+tbody tr:hover{
+    background:#fafafa;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Responsive
+|--------------------------------------------------------------------------
+*/
+
+@media(max-width:768px){
+
+    #saldo_container{
+        width:95%;
+    }
+
+    .saldo_valor{
+        font-size:28px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+    }
+
+    #acciones{
+        flex-direction:column;
+    }
+
+    .action_button{
+        text-align:center;
+    }
+
+}
