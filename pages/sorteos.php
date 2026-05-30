@@ -156,9 +156,16 @@ $resultado = mysqli_query($conexion, $sql);
                 Historial
             </a>
 
-            <a href="#" class="nav_item">
-                Próximamente
-            </a>
+            <?php if(
+    isset($_SESSION["rol_id"])
+    && $_SESSION["rol_id"] == 1
+){ ?>
+
+    <a href="admin.php" class="nav_item">
+        Administración
+    </a>
+
+<?php } ?>
 
         </div>
 
