@@ -1,0 +1,59 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#FFF8F0;
+    padding:40px;
+    font-family:"Nunito",sans-serif;
+}
+
+h1{
+    margin-bottom:30px;
+}
+
+form{
+    display:flex;
+    gap:10px;
+    margin-bottom:30px;
+}
+
+input{
+    width:300px;
+    padding:10px;
+}
+
+button{
+    padding:10px 20px;
+    cursor:pointer;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+.card p{
+    margin-top:10px;
+}
+
+.top_bar{
+    margin-bottom:20px;
+}
+
+.back_button{
+    text-decoration:none;
+    background:#38D9A9;
+    color:#2D3748;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.back_button:hover{
+    background:#118AB2;
+    color:white;
+}

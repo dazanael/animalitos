@@ -32,10 +32,23 @@ body{
 }
 
 
+#back_to_login{
+    margin-top:15px;
+    cursor:pointer;
+    font-weight:bold;
+    color:var(--botones);
+}
+
+#back_to_login:hover{
+    color:var(--botones_hover);
+}
 
 h1{
     font-family: var(--fuente-titulos);
 }
+
+
+
 p,label,input,a{
     font-family: var(--fuente-letras);
 }
@@ -110,6 +123,68 @@ form{
 #btn_text:hover{
     cursor: pointer;
     color: var(--botones_hover);
+}
+
+
+#back_to_login{
+    margin-top:15px;
+    cursor:pointer;
+    font-weight:bold;
+    color:var(--botones);
+}
+
+#back_to_login:hover{
+    color:var(--botones_hover);
+}
+
+.toast{
+    position:fixed;
+    top:20px;
+    right:20px;
+
+    padding:15px 25px;
+
+    border-radius:10px;
+
+    color:white;
+
+    font-weight:bold;
+
+    z-index:9999;
+
+    animation:
+        aparecer .3s ease,
+        desaparecer .3s ease 3.7s forwards;
+}
+
+.error{
+    background:#FF6B6B;
+}
+
+.success{
+    background:#38D9A9;
+}
+
+@keyframes aparecer{
+
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+@keyframes desaparecer{
+
+    to{
+        opacity:0;
+    }
+
 }
 
 .invisible{

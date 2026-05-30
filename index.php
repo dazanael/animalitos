@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/login.css?v=3">
 
     <title>Animalitos Manizales</title>
 </head>
@@ -30,6 +30,7 @@
     </section>
 
     <section class="form_box invisible" id="sign_up_box">
+        <p id="back_to_login"> ← Volver al inicio de sesión </p>
         <h1>Regístrate</h1>
         <form action="php/guardar.php" method="POST"  class="form_sign_up">
             <div class="input_box">
@@ -48,5 +49,46 @@
         </form>
     </section>
     <script src="js/login.js"></script>
+    <?php if(isset($_GET["error"])) { ?>
+
+<div class="toast error">
+
+    <?php
+
+    if($_GET["error"] == "login"){
+
+        echo "Correo o contraseña incorrectos";
+
+    }
+
+    if($_GET["error"] == "correo"){
+
+        echo "Ese correo ya está registrado";
+
+    }
+
+    ?>
+
+</div>
+
+<?php } ?>
+
+<?php if(isset($_GET["success"])) { ?>
+
+<div class="toast success">
+
+    <?php
+
+    if($_GET["success"] == "registro"){
+
+        echo "Cuenta creada correctamente";
+
+    }
+
+    ?>
+
+</div>
+
+<?php } ?>
 </body>
 </html>

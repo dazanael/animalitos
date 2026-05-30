@@ -220,3 +220,18 @@ tbody tr:hover{
     }
 
 }
+
+.acciones{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+}
+
+.action_btn{
+    text-decoration:none;
+    padding:12px 20px;
+    background:#38D9A9;
+    color:#2D3748;
+    border-radius:8px;
+    font-weight:bold;
+}

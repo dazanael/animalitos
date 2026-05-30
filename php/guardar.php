@@ -13,8 +13,14 @@ $sql = "INSERT INTO usuarios(nombre,correo,contraseña,saldo,rol_id) VALUES ('$n
 $resultado = mysqli_query($conexion,$sql);
 
 if($resultado){
-    echo "Usuario registrado";
+    header(
+    "Location: ../index.php?success=registro"
+);
+exit;
 }else{
-    echo "Error";
+    header(
+    "Location: ../index.php?error=correo"
+);
+exit;
 }
 ?>
