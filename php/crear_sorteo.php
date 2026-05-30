@@ -17,7 +17,7 @@ date_default_timezone_set("America/Bogota");
 |
 */
 
-$intervalo = '+1 hour';
+$intervalo = '+1 minute';
 
 /*
 |--------------------------------------------------------------------------
@@ -152,6 +152,21 @@ $fecha_nueva = $proximo_sorteo->format("Y-m-d");
 
 $hora_nueva = $proximo_sorteo->format("H:i:s");
 
+$sql_verificar = "
+SELECT id
+FROM sorteos
+WHERE esta_activo = 1
+LIMIT 1
+";
+
+$verificar = mysqli_query(
+    $conexion,
+    $sql_verificar
+);
+
+if(mysqli_num_rows($verificar) > 0){
+    return;
+}
 /*
 |--------------------------------------------------------------------------
 | Insertar sorteo
