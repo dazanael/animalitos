@@ -22,7 +22,7 @@ FROM animales
 LEFT JOIN apuestas
 ON apuestas.animal_id = animales.id
 
-AND apuestas.sorteo_id = {$sorteo['id']}
+AND apuestas.sorteo_id = {$sorteo['id']} AND apuestas.estado_id = 1
 
 GROUP BY animales.id
 ";

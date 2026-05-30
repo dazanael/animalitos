@@ -60,6 +60,33 @@ LIMIT 1
 
 $resultado_sorteo = mysqli_query($conexion, $sql_sorteo);
 $sorteo_activo = mysqli_fetch_assoc($resultado_sorteo);
+$apuestas_activas = [];
+
+if(isset($_SESSION["usuario_id"])){
+
+    $sql_apuestas_activas = "
+    SELECT
+        animal_id,
+        SUM(monto) AS total_apostado
+    FROM apuestas
+    WHERE usuario_id = '$usuario_id'
+    AND sorteo_id = '{$sorteo_activo["id"]}'
+    AND estado_id = 1
+    GROUP BY animal_id
+    ";
+
+    $resultado_apuestas_activas = mysqli_query(
+        $conexion,
+        $sql_apuestas_activas
+    );
+
+    while($fila = mysqli_fetch_assoc($resultado_apuestas_activas)){
+
+        $apuestas_activas[$fila["animal_id"]] = true;
+
+    }
+
+}
 if(!$sorteo_activo){
     die("No hay sorteo activo");
 }
@@ -78,8 +105,8 @@ FROM animales
 
 LEFT JOIN apuestas
 ON apuestas.animal_id = animales.id
-
 AND apuestas.sorteo_id = {$sorteo_activo['id']}
+AND apuestas.estado_id = 1
 
 GROUP BY animales.id";
 
@@ -125,8 +152,8 @@ $resultado = mysqli_query($conexion, $sql);
                 Sorteos
             </a>
 
-            <a href="resultados.php" class="nav_item">
-                Resultados
+            <a href="historial.php" class="nav_item">
+                Historial
             </a>
 
             <a href="#" class="nav_item">
@@ -157,7 +184,17 @@ $resultado = mysqli_query($conexion, $sql);
     <section id="info_box">
         <div id="animals_box">
             <?php while($animal = mysqli_fetch_assoc($resultado)) { ?>
-                <div class="animal" data-id="<?php echo $animal["id"];?>">
+                <div class="animal" data-id="<?php echo $animal["id"]; ?>">
+                    <?php if(isset($apuestas_activas[$animal["id"]])) { ?>
+
+                        <div
+                            class="cancel_bet"
+                            data-animal-id="<?php echo $animal["id"]; ?>"
+                        >
+                            ×
+                        </div>
+
+                    <?php } ?>
                     <p>
                         <?php 
                             echo $animal["numero"] . " " . $animal["nombre"]; 

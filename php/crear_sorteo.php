@@ -17,7 +17,7 @@ date_default_timezone_set("America/Bogota");
 |
 */
 
-$intervalo = '+1 minute';
+$intervalo = '+1 hour';
 
 /*
 |--------------------------------------------------------------------------
