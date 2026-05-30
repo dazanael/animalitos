@@ -164,18 +164,18 @@ $resultado = mysqli_query($conexion, $sql);
 
         <div id="header_right">
 
-            <button id="balance_button">
+            <a href="saldo.php" id="balance_button">
                 $<?php echo number_format($usuario["saldo"]); ?>
-            </button>
+            </a>
 
-            <div id="profile_icon">
+            <a href="perfil.php" id="profile_icon">
 
-                <img 
+                <img
                     src="../img/profile.png"
                     alt=""
                 >
 
-            </div>
+            </a>
 
         </div>
 

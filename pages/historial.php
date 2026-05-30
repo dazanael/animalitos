@@ -180,19 +180,13 @@ $resultado_apuestas = mysqli_query(
                 Historial
             </a>
 
-            <a href="#" class="nav_item">
-                Próximamente
-            </a>
-
         </div>
 
         <div id="header_right">
 
-            <button id="balance_button">
-
+            <a href="saldo.php" id="balance_button">
                 $<?php echo number_format($usuario["saldo"]); ?>
-
-            </button>
+            </a>
 
             <div id="profile_icon">
 
@@ -227,12 +221,6 @@ $resultado_apuestas = mysqli_query(
                 Mis apuestas
             </button>
 
-            <button
-                class="tab_button <?php echo $tab_activa == 'movimientos' ? 'active' : ''; ?>"
-                data-tab="movimientos"
-            >
-                Movimientos
-            </button>
         </section>
 
         <!-- Resultados -->
